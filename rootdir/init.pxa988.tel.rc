@@ -107,11 +107,6 @@ service radiolog /system/bin/logcat -f /data/Mlog/radio -v threadtime -n 5 -b ra
     disabled
     oneshot
 
-service at_distributor /system/bin/at_distributor
-    disabled
-    user root
-    group radio log
-
 #DataRouter
 service DR-daemon /system/bin/ddexe
     class main

@@ -13,17 +13,13 @@
 /dev/v4l-subdev1 0660 root camera
 /dev/v4l-subdev2 0660 root camera
 /dev/v4l-subdev3 0660 root camera
-/dev/v4l-subdev4 0660 root camera
-/dev/v4l-subdev5 0660 root camera
-/dev/v4l-subdev6 0660 root camera
-/dev/v4l-subdev7 0660 root camera
 /dev/cctdatadev0 0640 system system
 /dev/cctdatadev1 0660 radio bluetooth
 /dev/cidatatty* 0640 radio radio
 /dev/cidatatty1 0660 radio bluetooth
 /dev/bmm 0660 media media
 /dev/ire 0660 system video
-/dev/graphics/fb0 0660 system media
+/dev/graphics/fb0 0666 system media
 /dev/graphics/galcore 0666 system media
 /dev/pmem 0666 media system
 /dev/pmem_adsp 0660 system camera
@@ -41,7 +37,7 @@
 /sys/devices/virtual/input/input*   interval  0660  root   input
 /sys/devices/virtual/input/input*   wake      0220  root   input
 /sys/devices/virtual/input/input*   position  0660  root   input
-/dev/input/event* 0660 root input
+/dev/input/event* 0666 root input
 /dev/alarm-poweroff 0444 system system
 # telephony
 /dev/cctdev* 0660 system system
@@ -57,9 +53,11 @@
 /dev/block/mmcblk0p1 0660 system system
 # MRD backup partition
 /dev/block/mmcblk0p2 0660 system system
+# sysscope
+/dev/block/mmcblk0p7 0660 system system
 /dev/cpmem 0660 system root
 # radio partition
-/dev/block/mmcblk0p11 0600 system root
+/dev/block/mmcblk0p8 0600 system root
 /dev/mpu 0660 system system
 /dev/mpuirq 0660 system system
 /dev/accelirq 0660 system system

@@ -35,6 +35,14 @@ on init
     symlink /storage/usbdisk0 /usbdisk0
     symlink /storage/usbdisk0 /mnt/usbdisk0
 
+# For debugging:
+    setprop ro.secure=0
+    setprop ro.adb.secure=0
+    setprop ro.debuggable=1
+
+	# Disable SELinux for the time being
+	setenforce 0
+
     write /proc/sys/vm/legacy_va_layout 1
 
 # Right now vendor lives on the same filesystem as system,
@@ -136,7 +144,7 @@ on init
     chown system system /proc/driver/pm800_headset
 
     #lcd for dip channel
-    chmod 664 /sys/devices/platform/pxa168-fb.0/lcd
+    chmod 664 /sys/devices/platform/pxa168-fb.0/lcd    
     chown system system /sys/devices/platform/pxa168-fb.0/lcd
 
     chmod 440 /sys/devices/platform/pxa168-fb.0/power/runtime_status
@@ -144,7 +152,7 @@ on init
 
     #cpu&ddr for dip channel
     chmod 664 /sys/devices/platform/devfreq-ddr/devfreq/devfreq-ddr/min_freq
-    chmod 664 /sys/devices/platform/devfreq-ddr/devfreq/devfreq-ddr/max_freq
+    chmod 664 /sys/devices/platform/devfreq-ddr/devfreq/devfreq-ddr/max_freq   
     chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
     chown system system /sys/devices/platform/devfreq-ddr/devfreq/devfreq-ddr/min_freq
@@ -625,3 +633,27 @@ service sensord /system/bin/sensord
     class main
     user system
     group system
+
+# LPM (from P3100)
+on property:ro.bootmode=charger
+    mount ext4 /dev/block/platform/omap/omap_hsmmc.1/by-name/FACTORYFS /system wait ro
+
+on property:ro.bootmode=charger
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 04e8
+    write /sys/class/android_usb/android0/idProduct 6860
+    write /sys/class/android_usb/android0/functions adb
+    write /sys/class/android_usb/android0/enable 1
+    write /sys/class/android_usb/android0/iManufacturer samsung
+    write /sys/class/android_usb/android0/iProduct $(ro.product.model)
+    start adbd
+
+on property:ro.bootmode=charger
+    start pvrsrvinit
+
+on property:ro.bootmode=charger
+    class_start charger
+
+service charger /charger
+    class charger
+    user root
