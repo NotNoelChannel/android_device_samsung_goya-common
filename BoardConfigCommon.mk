@@ -3,6 +3,10 @@
 
 LOCAL_PATH := device/samsung/goya-common
 
+# Resolution
+TARGET_SCREEN_HEIGHT := 1024
+TARGET_SCREEN_WIDTH  := 600
+
 # Architecture
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
@@ -112,19 +116,19 @@ SENSORS_NEED_SETRATE_ON_ENABLE := true
 
 # SELinux
 export BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
-#BOARD_SEPOLICY_UNION += \
-#    file_contexts \
-#    device.te \
-#    dhcp.te \
-#    file.te \
-#    init.te \
-#    mediaserver.te \
-#    netmgrd.te \
-#    rild.te \
-#    secril.te \
-#    system.te \
-#    ueventd.te \
-#    wpa_supplicant.te
+BOARD_SEPOLICY_UNION += \
+    file_contexts \
+    device.te \
+    dhcp.te \
+    file.te \
+    init.te \
+    mediaserver.te \
+    netmgrd.te \
+    rild.te \
+    secril.te \
+    system.te \
+    ueventd.te \
+    wpa_supplicant.te
 
 # Graphics
 ENABLE_HWC_GC_PATH := true
@@ -158,3 +162,17 @@ TARGET_TS_MAKEUP := true
 # Blob configs
 COMMON_GLOBAL_CFLAGS += -DMR0_CAMERA_BLOB
 COMMON_GLOBAL_CFLAGS += -DSAMSUNG_DVFS
+
+# TWRP
+TW_NO_REBOOT_BOOTLOADER := true
+TW_HAS_DOWNLOAD_MODE := true
+TW_EXCLUDE_TWRPAPP := true
+TW_USE_TOOLBOX := false
+TW_INCLUDE_FUSE_EXFAT := true
+TW_INCLUDE_CRYPTO := false
+TW_EXCLUDE_ENCRYPTED_BACKUPS := true
+TW_NO_CPU_TEMP := true
+TW_NO_HAPTICS := true
+RECOVERY_SDCARD_ON_DATA := false
+TW_MTP_DEVICE := "/dev/usb_mtp_gadget"
+TW_THEME := landscape_hdpi
